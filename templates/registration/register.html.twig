@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'inscription{% endblock %}
+
+{% block body %}
+<div class="flex" style="height: 80vh;">
+    <div class="flex flex-row w-full">
+        
+
+        <!-- Formulaire d'inscription -->
+        <div class="flex flex-1 flex-col items-center justify-center px-10 relative">
+            <div class="flex lg:hidden justify-between items-center w-full py-4">
+                <div class="flex items-center justify-start space-x-3">
+                    <span class="bg-black rounded-full w-6 h-6"></span>
+                    <a href="#" class="font-medium text-lg">Marque</a>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span>Déjà membre ? </span>
+                    <a href="{{ path('app_login') }}" class="underline font-medium text-[#070eff]">Connectez-vous maintenant</a>
+                </div>
+            </div>
+
+            <!-- Boîte d'inscription -->
+            <div class="flex flex-1 flex-col justify-center space-y-5 max-w-md">
+                <div class="flex flex-col space-y-2 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold">Créez votre compte</h2>
+                    <p class="text-md md:text-xl">Inscrivez-vous pour découvrir de nouvelles fonctionnalités et opportunités !</p>
+                </div>
+
+                <!-- Message d'erreur -->
+                {% if form_errors(registrationForm) %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(registrationForm) }}
+                    </div>
+                {% endif %}
+
+                <div class="flex flex-col max-w-md space-y-5">
+                    {{ form_start(registrationForm) }}
+
+                    <div class="flex flex-col mb-4">
+                        <label for="email"
+                               class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            Email *
+                        </label>
+                        {{ form_row(registrationForm.email, {
+                            'attr': {'class': 'text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-4'}
+                        }) }}
+                    </div>
+
+                    <div class="flex flex-col mb-4">
+                        {# <label for="plainPassword"
+                               class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+                            Mot de passe
+                        </label> #}
+                        {{ form_row(registrationForm.plainPassword, {
+                            'label': 'Mot de passe',
+                            'attr': {'class': 'text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-4'},
+                        }) }}
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        {{ form_row(registrationForm.agreeTerms, {
+                            'attr': {'class': 'mr-2'}
+                        }) }}
+                        <label for="agreeTerms" class="text-xs sm:text-sm text-gray-600">J'accepte la <a href="{{ path('app_privacy_policy') }}"> Politique de confidentialité</a></label>
+                        {# {{ form_errors(form.agreeTerms) }} #}
+                    </div>
+
+                    <button type="submit" class="btn px-4 py-3 border-2 rounded-lg font-medium border-black bg-black text-white">
+                        S'inscrire
+                    </button>
+
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Barre latérale -->
+        <div class="hidden lg:flex flex-col justify-between bg-[#ffe85c] xl:p-12  " style="width: 50%;">
+            <div class="flex items-center justify-start space-x-3">
+                <span class="bg-black rounded-full w-8 h-8"></span>
+                <a href="#" class="font-medium text-xl">Marque</a>
+            </div>
+            <div class="space-y-5">
+                <h1 class="lg:text-3xl xl:text-5xl xl:leading-snug font-extrabold">Créez votre compte et commencez à explorer</h1>
+                <p class="text-lg">Vous avez déjà un compte ?</p>
+                <a href="{{ path('app_login') }}" class="inline-block flex-none px-4 py-3 border-2 rounded-lg font-medium border-black bg-black text-white">
+                    Connectez-vous ici
+                </a>
+            </div>
+            <p class="font-medium">© 2022 Entreprise</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {# templates/base.html.twig #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+
+        {% block header %}
+        {% include '_partials/_header.html.twig' %}
+        {% endblock %}
+        
+
+            {% block body %}{% endblock %}
+
+            {% block footer %}{% include '_partials/_footer.html.twig' %}{% endblock %}
+        
+
+
+    </body>
+
+
+<script>
+    let toggleOpen = document.getElementById('toggleOpen');
+let toggleClose = document.getElementById('toggleClose');
+let collapseMenu = document.getElementById('collapseMenu');
+
+function handleClick() {
+  if (collapseMenu.style.display === 'block') {
+    collapseMenu.style.display = 'none';
+  } else {
+    collapseMenu.style.display = 'block';
+  }
+}
+
+toggleOpen.addEventListener('click', handleClick);
+toggleClose.addEventListener('click', handleClick);
+</script>
+</html>

@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block body %}
+<div class="flex" style="height: 80vh;">
+    <div class="flex flex-row w-full">
+    
+        <!-- Sidebar -->
+        <div class="hidden lg:flex flex-col justify-between bg-[#ffe85c] xl:p-12  " style="width: 50%;">
+            <div class="flex items-center justify-start space-x-3">
+                <span class="bg-black rounded-full w-8 h-8"></span>
+                <a href="#" class="font-medium text-xl">Brand</a>
+            </div>
+            <div class="space-y-5">
+                <h1 class="lg:text-3xl xl:text-5xl xl:leading-snug font-extrabold">Enter your account and discover new experiences</h1>
+                <p class="text-lg">You do not have an account?</p>
+                <button class="inline-block flex-none px-4 py-3 border-2 rounded-lg font-medium border-black bg-black text-white">
+                    Create account here
+                </button>
+            </div>
+            <p class="font-medium">© 2022 Company</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="flex flex-1 flex-col items-center justify-center px-10 relative">
+            <div class="flex lg:hidden justify-between items-center w-full py-4">
+                <div class="flex items-center justify-start space-x-3">
+                    <span class="bg-black rounded-full w-6 h-6"></span>
+                    <a href="#" class="font-medium text-lg">Brand</a>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span>Not a member? </span>
+                    <a href="#" class="underline font-medium text-[#070eff]">Sign up now</a>
+                </div>
+            </div>
+
+            <!-- Login Box -->
+            <div class="flex flex-1 flex-col justify-center space-y-5 max-w-md">
+                <div class="flex flex-col space-y-2 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold">Sign in to account</h2>
+                    <p class="text-md md:text-xl">Sign up or log in to place the order, no password required!</p>
+                </div>
+
+                <!-- Error Message -->
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                <!-- User logged in -->
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }},
+                        <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <div class="flex flex-col max-w-md space-y-5">
+                    <div class="flex flex-col mb-4">
+    <label for="username"
+           class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+        Email
+    </label>
+
+    <div class="relative">
+        <div class="absolute flex border border-transparent left-0 top-0 h-full w-10">
+            <div class="flex items-center justify-center rounded-tl rounded-bl z-10 bg-gray-100 text-gray-600 text-lg h-full w-full">
+                <svg viewBox="0 0 24 24"
+                     width="24"
+                     height="24"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     fill="none"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-5 w-5">
+                    <path d="M16 12v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="16"
+                            cy="16"
+                            r="1"></circle>
+                </svg>
+            </div>
+        </div>
+
+        <input id="username"
+               name="_username"
+               type="email"
+               placeholder="Email"
+               {# value="{{ last_username }}" #}
+               class=" text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-12 pl-10">
+    </div>
+</div>
+
+<div class="flex flex-col mb-4">
+    <label for="password"
+           class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
+        Password
+    </label>
+
+    <div class="relative">
+        <div class="absolute flex border border-transparent left-0 top-0 h-full w-10">
+            <div class="flex items-center justify-center rounded-tl rounded-bl z-10 bg-gray-100 text-gray-600 text-lg h-full w-full">
+                <svg viewBox="0 0 24 24"
+                     width="24"
+                     height="24"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     fill="none"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-5 w-5">
+                    <path d="M12 1C7.588 1 4 4.588 4 9c0 5.25 8 14 8 14s8-8.75 8-14c0-4.412-3.588-8-8-8zM12 13c-2.25 0-4-1.75-4-4s1.75-4 4-4 4 1.75 4 4-1.75 4-4 4z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <input id="password"
+               name="_password"
+               type="password"
+               placeholder="Password"
+               class="text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-12 pl-10">
+    </div>
+</div>
+
+
+                    <div class="flex justify-center items-center">
+                        <span class="w-full border border-black"></span>
+                        <span class="px-4">Or</span>
+                        <span class="w-full border border-black"></span>
+                    </div>
+                    <button class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
+                        <span class="absolute left-4">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path fill="#EA4335 " d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z"/>
+                  <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2936293 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z"/>
+                  <path fill="#4A90E2" d="M19.834192,20.9995801 C22.0291676,18.9520994 23.4545455,15.903663 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013626 17.2662994,17.2212117 16.0407269,18.0125889 L19.834192,20.9995801 Z"/>
+                  <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z"/>
+              </svg>
+              </span>
+                        Sign in with Google
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
