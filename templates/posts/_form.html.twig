@@ -1,0 +1,45 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md">
+        {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+        <div class="space-y-4">
+            <div>
+                {{ form_label(form.title, 'Title', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div>
+                {{ form_label(form.body, 'Body', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.body, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.body) }}
+            </div>
+
+            <div>
+                {{ form_label(form.user, 'User', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.user, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.user) }}
+            </div>
+
+            <div>
+                {{ form_label(form.Tags, 'Tags', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.Tags, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.Tags) }}
+            </div>
+
+            <div>
+                {{ form_label(form.Category, 'Category', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.Category, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.Category) }}
+            </div>
+        </div>
+
+        <div class="flex justify-end">
+            <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                {{ button_label|default('Save') }}
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>

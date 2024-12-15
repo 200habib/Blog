@@ -1,0 +1,18 @@
+<nav id="bar" class="flex justify-center py-6 border-b border-gray-300 text-white">
+    <div class="flex flex-col md:flex-row justify-center md:space-y-0 space-y-4 text-center text-gray-500">
+        {% if category is not empty %}
+        {% for categorys in category %}
+        <a href="{{ path('app_posts_by_category', { 'categoryId': categorys.id }) }}" class="mx-8 hover:text-red-900">
+            {{ categorys.name }}
+        </a>
+        {% endfor %}
+        <a href="{{path('app_posts_new')}}" class="pl-2.5"><img
+                src="https://cdn-icons-png.flaticon.com/512/7134/7134131.png" alt="" height="30px" width="30px"></a>
+        {% else %}
+        <a href="#" class="mx-8 hover:text-red-900">Documentazione</a>
+        <a href="#" class="mx-8 hover:text-red-900">Blog</a>
+        <a href="#" class="mx-8 hover:text-red-900">Servizi</a>
+        <a href="#" class="mx-8 hover:text-red-900">Prezzi</a>
+        {% endif %}
+    </div>
+</nav>

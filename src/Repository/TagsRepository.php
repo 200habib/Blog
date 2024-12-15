@@ -40,4 +40,9 @@ class TagsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllTags()
+    {
+        return $this->findAll();  
+    }
 }

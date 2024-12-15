@@ -40,4 +40,10 @@ class PostsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+    public function findAllPosts()
+    {
+        return $this->findAll();  
+    }
 }

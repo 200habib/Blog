@@ -21,13 +21,8 @@ class Website
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne(inversedBy: 'websites')]
-    private ?UserProfile $userProfile = null;
-
-    /**
-     * @var Collection<int, UserProfile>
-     */
-    #[ORM\OneToMany(targetEntity: UserProfile::class, mappedBy: 'Website')]
+    // Relazione inversa con UserProfile (OneToMany)
+    #[ORM\OneToMany(mappedBy: 'website', targetEntity: UserProfile::class)]
     private Collection $userProfiles;
 
     public function __construct()
@@ -60,18 +55,6 @@ class Website
     public function setUrl(string $url): static
     {
         $this->url = $url;
-
-        return $this;
-    }
-
-    public function getUserProfile(): ?UserProfile
-    {
-        return $this->userProfile;
-    }
-
-    public function setUserProfile(?UserProfile $userProfile): static
-    {
-        $this->userProfile = $userProfile;
 
         return $this;
     }

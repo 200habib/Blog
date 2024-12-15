@@ -20,6 +20,9 @@ class SubCategory
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(inversedBy: 'subCategories')]
+    private ?Category $Category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class SubCategory
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->Category;
+    }
+
+    public function setCategory(?Category $Category): static
+    {
+        $this->Category = $Category;
 
         return $this;
     }
