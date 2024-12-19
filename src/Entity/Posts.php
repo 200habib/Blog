@@ -40,6 +40,9 @@ class Posts
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?Category $Category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?SubCategory $subcategory = null;
+
 
     public function __construct()
     {
@@ -154,5 +157,17 @@ class Posts
     public function updateTimestamp(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getSubcategory(): ?SubCategory
+    {
+        return $this->subcategory;
+    }
+
+    public function setSubcategory(?SubCategory $subcategory): static
+    {
+        $this->subcategory = $subcategory;
+
+        return $this;
     }
 }

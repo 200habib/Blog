@@ -34,8 +34,8 @@ class PostsType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Count([
-                        'min' => 1,  // Seleziona almeno un tag
-                        'max' => 5,  // Massimo 5 tag
+                        'min' => 1,  
+                        'max' => 5,  
                         'maxMessage' => 'You can select up to {{ limit }} tags.',
                         'minMessage' => 'Please select at least {{ limit }} tag.',
                     ]),
@@ -43,6 +43,10 @@ class PostsType extends AbstractType
             ])
             ->add('Category', EntityType::class, [
                 'class' => Category::class,
+                'choice_label' => 'name',
+            ])
+            ->add('SubCategory', EntityType::class, [
+                'class' => SubCategory::class,
                 'choice_label' => 'name',
             ])
         ;
