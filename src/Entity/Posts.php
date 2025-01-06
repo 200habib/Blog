@@ -34,7 +34,7 @@ class Posts
     /**
      * @var Collection<int, tags>
      */
-    #[ORM\ManyToMany(targetEntity: tags::class, inversedBy: 'posts')]
+    #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'posts')]
     private Collection $Tags;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]

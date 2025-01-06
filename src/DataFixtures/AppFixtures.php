@@ -25,7 +25,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Creazione delle categorie
         $category1 = new Category();
         $category1->setName('Technology')
                   ->setDescription('All things technology');
@@ -37,7 +36,6 @@ class AppFixtures extends Fixture
         $manager->persist($category1);
         $manager->persist($category2);
 
-        // Creazione delle sottocategorie
         $subCategory1 = new SubCategory();
         $subCategory1->setName('Programming')
                      ->setDescription('All about programming')
@@ -51,7 +49,6 @@ class AppFixtures extends Fixture
         $manager->persist($subCategory1);
         $manager->persist($subCategory2);
 
-        // Creazione dei tag
         $tag1 = new Tags();
         $tag1->setName('AI');
         $tag2 = new Tags();
@@ -78,10 +75,9 @@ class AppFixtures extends Fixture
         $manager->persist($tag7);
         $manager->persist($tag8);
 
-        // Creazione degli utenti
         $user = new User();
         $user->setEmail('user@example.com')
-             ->setUsername('user123') // Aggiungi il nome utente
+             ->setUsername('user123') 
              ->setRoles(['ROLE_USER'])
              ->setPassword($this->passwordHasher->hashPassword($user, 'password123'));
 
@@ -108,7 +104,7 @@ class AppFixtures extends Fixture
         $post2->addTag($tag3);
         $post2->addTag($tag4);
 
-        // Nuovi post
+        
         $post3 = new Posts();
         $post3->setTitle('Understanding the Power of JavaScript')
               ->setBody('JavaScript continues to grow as a powerful tool for web development...')
@@ -159,7 +155,6 @@ class AppFixtures extends Fixture
         $post7->addTag($tag3);
         $post7->addTag($tag4);
 
-        // Persisti i nuovi post
         $manager->persist($post1);
         $manager->persist($post2);
         $manager->persist($post3);
@@ -168,7 +163,6 @@ class AppFixtures extends Fixture
         $manager->persist($post6);
         $manager->persist($post7);
 
-        // Creazione dei siti web
         $website1 = new Website();
         $website1->setName('My Website')
                  ->setUrl('https://mywebsite.com');
@@ -180,7 +174,6 @@ class AppFixtures extends Fixture
         $manager->persist($website1);
         $manager->persist($website2);
 
-        // Creazione del profilo utente
         $userProfile = new UserProfile();
         $userProfile->setBio('I am a passionate web developer.')
                     ->setUser($user)
@@ -188,15 +181,12 @@ class AppFixtures extends Fixture
 
         $manager->persist($userProfile);
 
-        // Creazione dello stack dell’utente
         $userStack = new UserStack();
         $userStack->setName('PHP Developer');
         $manager->persist($userStack);
 
-        // Associa lo stack dell’utente al profilo
         $userProfile->setUserStack($userStack);
 
-        // Salvataggio nel database
         $manager->flush();
     }
 }
