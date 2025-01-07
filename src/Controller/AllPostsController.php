@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use Doctrine\ORM\Query\ResultSetMapping;
 
@@ -60,18 +61,29 @@ final class AllPostsController extends AbstractController
     }
 
     #[Route('/tags/{tagId}', name: 'app_posts_by_tag', methods: ['GET'])]
-    public function filterByTags(int $tagId, CategoryRepository $categoryRepository, PostsRepository $postRepository, TagsRepository $tagRepository): Response
+    public function filterByTags(
+        EntityManagerInterface $entityManager, int $tagId, CategoryRepository $categoryRepository, PostsRepository $postRepository, TagsRepository $tagRepository): Response
     {
-        $posts = $postRepository->createQueryBuilder('p')
-            ->innerJoin('p.Tags', 't')
-            ->where('t.id = :tagId')
-            ->setParameter('tagId', $tagId)
-            ->getQuery()
-            ->getResult();
-    
-        $tags = $tagRepository->findAll();
 
-        $category = $categoryRepository->findAllCategory();
+        // $posts = $postRepository->createQueryBuilder('p')
+        // ->innerJoin('p.Tags', 't')  // Join tra i post e i tag
+        // ->where('t.id = :tagId')  // Condizione per il tagId
+        // ->setParameter('tagId', $tagId)  // Impostiamo il parametro tagId
+        // ->getQuery()
+        // ->getResult();
+
+        $dql = 'SELECT p 
+        FROM App\Entity\Posts p 
+        JOIN p.Tags t 
+        WHERE t.id = :tagId';
+
+$query = $entityManager->createQuery($dql);
+$query->setParameter('tagId', $tagId);
+
+$posts = $query->getResult();
+
+    $tags = $tagRepository->findAll();
+    $category = $categoryRepository->findAllCategory();
     
         return $this->render('posts/index.html.twig', [
             'posts' => $posts,
@@ -81,6 +93,7 @@ final class AllPostsController extends AbstractController
     }
     
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_posts_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -89,7 +102,6 @@ final class AllPostsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $post->setCreatedAt(new \DateTimeImmutable()); 
             $post->updateTimestamp();
             $entityManager->persist($post);
             $entityManager->flush();
@@ -111,6 +123,8 @@ final class AllPostsController extends AbstractController
         ]);
     }
 
+
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_posts_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
     {
@@ -129,6 +143,7 @@ final class AllPostsController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'app_posts_delete', methods: ['POST'])]
     public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
     {

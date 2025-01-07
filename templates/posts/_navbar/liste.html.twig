@@ -6,8 +6,13 @@
             {{ categorys.name }}
         </a>
         {% endfor %}
-        <a href="{{path('app_posts_new')}}" class="pl-2.5"><img
-                src="https://cdn-icons-png.flaticon.com/512/7134/7134131.png" alt="" height="30px" width="30px"></a>
+
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{path('app_posts_new')}}" class="pl-2.5">
+                <img src="https://cdn-icons-png.flaticon.com/512/7134/7134131.png" alt="" height="30px" width="30px">
+            </a>
+        {% endif %}
+        
         {% else %}
         <a href="#" class="mx-8 hover:text-red-900">Documentazione</a>
         <a href="#" class="mx-8 hover:text-red-900">Blog</a>
