@@ -23,10 +23,10 @@ class PostsType extends AbstractType
         $builder
             ->add('title')
             ->add('body')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('Tags', EntityType::class, [
                 'class' => tags::class,
                 'choice_label' => 'name', 

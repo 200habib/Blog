@@ -26,12 +26,13 @@ final class PostFilterByCategoryController extends AbstractController
     public function filterByCategory(int $categoryId, PostsRepository $postRepository, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager, SubCategoryRepository $SubCategoryRepository): Response
     {
         
-        $posts = $postRepository->findBy(['Category' => $categoryId]);
+        $dql = 'SELECT p FROM App\Entity\Posts p JOIN p.Category c WHERE c.id = :categoryId';
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter('categoryId', $categoryId);
+        $posts = $query->getResult();
+        // $posts = $postRepository->findBy(['Category' => $categoryId]);
 
-        // $dql = 'SELECT p FROM App\Entity\Posts p JOIN p.Category c WHERE c.id = :categoryId';
-        // $query = $entityManager->createQuery($dql);
-        // $query->setParameter('categoryId', $categoryId);
-        // $posts = $query->getResult();
+        
 
         $category = $categoryRepository->findAllCategory();
         $SubCategory = $SubCategoryRepository->findAllSubCategory();

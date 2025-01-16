@@ -132,7 +132,12 @@ class Posts
 
     public function setUser(?User $user): static
     {
-        $this->user = $user;
+        $this->user =    $currentUser = $security->getUser();
+
+        // Controlla se l'utente è il proprietario del post
+        if ($post->getAuthor() !== $currentUser) {
+            throw new AccessDeniedException('You are not allowed to delete this post.');
+        } $user;
 
         return $this;
     }

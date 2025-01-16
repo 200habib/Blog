@@ -7,6 +7,8 @@ use App\Form\PostsType;
 use App\Repository\PostsRepository;
 use App\Repository\CategoryRepository;
 use App\Entity\Website;
+// use App\Entity\UserProfile;
+
 
 use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 #[Route('/posts')]
@@ -58,18 +61,10 @@ final class AllPostsController extends AbstractController
 
     #[Route('/{id}', name: 'app_posts_show', methods: ['GET'])]
     public function show(Posts $post, 
-    EntityManagerInterface $entityManager, 
-    Security $security): Response
+    EntityManagerInterface $entityManager): Response
     {
-        $user = $security->getUser();
-        
-        $Websites = $entityManager
-        ->getRepository(Website::class)
-        ->findBy(['user' => $user]);
-
         return $this->render('posts/show.html.twig', [
             'post' => $post,
-            'Website' => $Websites,
         ]);
     }
 
@@ -80,9 +75,17 @@ final class AllPostsController extends AbstractController
     public function edit(
         Request $request, 
         Posts $post, 
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Security $security
         ): Response
     {
+        $currentUser = $security->getUser();
+
+        
+        if ($post->getUser() !== $currentUser) {
+            return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
+         }
+
         $form = $this->createForm(PostsType::class, $post);
         $form->handleRequest($request);
 
@@ -102,8 +105,16 @@ final class AllPostsController extends AbstractController
     #[Route('/{id}', name: 'app_posts_delete', methods: ['POST'])]
     public function delete(Request $request, 
     Posts $post, 
-    EntityManagerInterface $entityManager): Response
+    EntityManagerInterface $entityManager,
+    Security $security): Response
     {
+        $currentUser = $security->getUser();
+
+        
+        if ($post->getUser() !== $currentUser) {
+            return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
+         }
+
         if ($this->isCsrfTokenValid('delete'.$post->getId(), 
         $request->getPayload()->getString('_token'))) {
             $entityManager->remove($post);
