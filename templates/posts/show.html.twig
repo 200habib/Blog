@@ -3,52 +3,73 @@
 {% block title %}{{ post.title }} - Blog{% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <!-- Title and Metadata -->
-            <article class="blog-post">
-                <header class="mb-4">
-                    <h1 class="fw-bold">{{ post.title }}</h1>
-                    <p class="text-muted">
-                        Posted on {{ post.createdAt ? post.createdAt|date('F j, Y') : 'Unknown date' }} 
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="mb-4 lg:mb-6 not-format">
+                <address class="flex items-center mb-6 not-italic">
+                    <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                        <div>
+                            <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ post.user.username }}</a>
+                            <p class="text-base text-gray-500 dark:text-gray-400">
+                                <time pubdate datetime="{{ post.createdAt|date('Y-m-d') }}" title="{{ post.createdAt|date('F j, Y') }}">
+                                    {{ post.createdAt|date('F j, Y') }}
+                                </time>
+                            </p>
+                        </div>
+                    </div>
+                </address>
 
-                    </p>
-                </header>
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ post.title }}</h1>
+            </header>
 
-                <!-- Post Body -->
-                <section class="post-body mb-5">
-                    <p class="fs-5">{{ post.body }}</p>
-                </section>
+            
+            {% if post.imageName %}
+                <figure class="my-6">
+                    <img src="{{ asset('images/products/' ~ post.imageName) }}" alt="{{ post.title }}" class="w-full h-auto rounded-lg shadow-lg">
+                    <figcaption class="text-center mt-2 text-sm text-gray-500 dark:text-gray-400">Image related to the post</figcaption>
+                </figure>
+            {% else %}
+            <img class="object-cover w-full h-56 rounded-lg lg:w-64" 
+                             src="https://images.unsplash.com/photo-1624996379697-f01d168b1a52?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" 
+                             alt="{{ post.title }}">
+            {% endif %}
 
-                <!-- Tags -->
-                <footer class="post-tags">
-                    <h5 class="fw-bold">Tags:</h5>
-                    <ul class="list-inline">
-                        {% for tag in post.tags %}
-                            <li class="list-inline-item">
-                                <a href="{{ path('app_posts_by_tag', {'tagId': tag.id}) }}" class="badge bg-secondary text-decoration-none">
-                                    {{ tag.name }}
+
+            <p class="lead text-lg">{{ post.body }}</p>
+
+            
+
+            <footer class="mt-8">
+                <h5 class="text-xl font-bold text-gray-900 dark:text-white">Tags:</h5>
+                <ul class="list-inline">
+                    {% for tag in post.tags %}
+                           <li class="list-inline-item inline-block mb-2 bg-blue-100 dark:bg-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300">
+                                <a href="{{ path('app_posts_by_tag', {'tagId': tag.id}) }}" class="inline-block px-3 py-1 bg-secondary-100 text-sm text-white rounded-full hover:bg-secondary-200 dark:hover:bg-secondary-300">
+                                   {{ tag.name }}
                                 </a>
                             </li>
-                        {% else %}
-                            <li class="list-inline-item text-muted">No tags</li>
-                        {% endfor %}
-                    </ul>
-                </footer>
-            </article>
+                    {% else %}
+                        <li class="list-inline-item text-muted">No tags</li>
+                    {% endfor %}
+
+                        
+{% for user in Website %}
+<p class="lead text-lg">{{ user.name }}</p>
+
+    <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ user.url }}</a>
+{% endfor %} 
 
 
-{% if app.user and app.user.id == post.user.id %}
-    <a href="{{ path('app_posts_edit', {'id': post.id}) }}" class="btn btn-primary">
-        <i class="fas fa-edit"></i> Edit Post
-    </a>
-{% endif %}
+                </ul>
+            </footer>
+        </article>
 
-
-
-            </div>
-        </div>
+        {% if app.user and app.user.id == post.user.id %}
+            <a href="{{ path('app_posts_edit', {'id': post.id}) }}" class="mt-4 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                <i class="fas fa-edit mr-2"></i> Edit Post
+            </a>
+        {% endif %}
     </div>
-</div>
+</main>
 {% endblock %}

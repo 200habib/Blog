@@ -1,4 +1,4 @@
-<nav id="bar" class="flex justify-center py-6 border-b border-gray-300 text-white">
+<nav id="bar" class="py-6 border-b border-gray-300 text-white">
     <div class="flex flex-col md:flex-row justify-center md:space-y-0 space-y-4 text-center text-gray-500">
         {% if category is not empty %}
         {% for categorys in category %}
@@ -6,6 +6,11 @@
             {{ categorys.name }}
         </a>
         {% endfor %}
+
+
+
+
+
 
         {% if is_granted('ROLE_USER') %}
             <a href="{{path('app_posts_new')}}" class="pl-2.5">
@@ -20,4 +25,20 @@
         <a href="#" class="mx-8 hover:text-red-900">Prezzi</a>
         {% endif %}
     </div>
+{% if SubCategory is defined %}
+<br>
+{% endif %}
+
+<div class="flex justify-center">
+{% if SubCategory is defined %}
+
+    {% for SubCategorys in SubCategory %}
+        {% if categoryId == SubCategorys.category.id %}
+            <a href="{{ path('app_posts_by_category_subcategory', { 'subcategoryId': SubCategorys.id }) }}" class="mx-8 hover:text-red-900 text-gray-500">
+                {{ SubCategorys.name }}
+            </a>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</div>
 </nav>

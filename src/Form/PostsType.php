@@ -12,7 +12,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Count;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 
 class PostsType extends AbstractType
@@ -48,6 +49,22 @@ class PostsType extends AbstractType
             ->add('SubCategory', EntityType::class, [
                 'class' => SubCategory::class,
                 'choice_label' => 'name',
+            ])
+            ->add('imageFile', FileType::class, [
+                'label' => 'Upload Image',
+                'required' => false,
+                'mapped' => true, // Mappato all'entità
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF).',
+                    ]),
+                ],
             ])
         ;
     }

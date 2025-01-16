@@ -49,7 +49,22 @@ class RegistrationFormType extends AbstractType
             'attr' => ['autocomplete' => 'email'],
         ])
 
-
+        ->add('username', null, [
+            'label' => 'Username',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter a username.',
+                ]),
+                new Length([
+                    'min' => 3,
+                    'max' => 50,
+                    'minMessage' => 'Your username should be at least {{ limit }} characters long',
+                    'maxMessage' => 'Your username cannot be longer than {{ limit }} characters',
+                ]),
+            ],
+            'attr' => ['autocomplete' => 'username'],
+        ])
+        
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => false,
                 'mapped' => false,

@@ -21,14 +21,11 @@ class Website
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    // Relazione inversa con UserProfile (OneToMany)
-    #[ORM\OneToMany(mappedBy: 'website', targetEntity: UserProfile::class)]
-    private Collection $userProfiles;
+    #[ORM\ManyToOne(inversedBy: 'websites')]
+    private ?UserProfile $UserProfile = null;
 
-    public function __construct()
-    {
-        $this->userProfiles = new ArrayCollection();
-    }
+
+
 
     public function getId(): ?int
     {
@@ -62,30 +59,19 @@ class Website
     /**
      * @return Collection<int, UserProfile>
      */
-    public function getUserProfiles(): Collection
+
+    public function getUserProfile(): ?UserProfile
     {
-        return $this->userProfiles;
+        return $this->UserProfile;
     }
 
-    public function addUserProfile(UserProfile $userProfile): static
+    public function setUserProfile(?UserProfile $UserProfile): static
     {
-        if (!$this->userProfiles->contains($userProfile)) {
-            $this->userProfiles->add($userProfile);
-            $userProfile->setWebsite($this);
-        }
+        $this->UserProfile = $UserProfile;
 
         return $this;
     }
 
-    public function removeUserProfile(UserProfile $userProfile): static
-    {
-        if ($this->userProfiles->removeElement($userProfile)) {
-            // set the owning side to null (unless already changed)
-            if ($userProfile->getWebsite() === $this) {
-                $userProfile->setWebsite(null);
-            }
-        }
 
-        return $this;
-    }
+
 }
