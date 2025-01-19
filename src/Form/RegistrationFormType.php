@@ -28,7 +28,7 @@ class RegistrationFormType extends AbstractType
     use RegexTrait;
     private const STRONG_PASSWORD = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#?!@$%^&*\-_]).{8,}$/';
 
-    private const EMAIL_REGEX = '/(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,63}|(?:\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+))\])/i';
+    // private const EMAIL_REGEX = '/(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,63}|(?:\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+))\])/i';
     // https://emailregex.com/ RFC 5322 Official Standard
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -47,10 +47,10 @@ class RegistrationFormType extends AbstractType
                     'max' => 180,
                     'maxMessage' => 'The email should not exceed {{ limit }} characters',
                 ]),
-                new Regex([
-                    'pattern' => self::EMAIL_REGEX,
-                    'message' => 'The email address format is invalid according to RFC 5322 standards.',
-                ]),
+                // new Regex([
+                //     'pattern' => self::EMAIL_REGEX,
+                //     'message' => 'The email address format is invalid according to RFC 5322 standards.',
+                // ]),
             ],
             'attr' => ['autocomplete' => 'email'],
         ])
@@ -90,10 +90,10 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter a password',
                     ]),
-                    new Regex(
-                        self::STRONG_PASSWORD,
-                        message: 'Le mot de passe doit contenir au minimum huit caractères, avec au moins une lettre majuscule, une lettre minuscule, un chiffre, et un caractère spécial (#?!@$ %^&*-_).'
-                    )
+                    // new Regex(
+                    //     self::STRONG_PASSWORD,
+                    //     message: 'Le mot de passe doit contenir au minimum huit caractères, avec au moins une lettre majuscule, une lettre minuscule, un chiffre, et un caractère spécial (#?!@$ %^&*-_).'
+                    // )
                 ],
                 'invalid_message' => 'Les champs de mot de passe doivent correspondre.',
                 'options' => ['attr' => ['class' => 'rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500']],
