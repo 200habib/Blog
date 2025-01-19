@@ -39,13 +39,18 @@ final class AllPostsController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_posts_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $post = new Posts();
         $form = $this->createForm(PostsType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $security->getUser();
+            
+            if ($user) {
+                $post->setUser($user);
+            }
             $post->updateTimestamp();
             $entityManager->persist($post);
             $entityManager->flush();
